@@ -27,8 +27,8 @@ if b2:
     with st.expander('Con cho'):
         st.write(Personality['Con cho'])
 if b3:
-    with st.expander('Con cho'):
-        st.write(Personality['Con cho'])
+    with st.expander('Con su tu'):
+        st.write(Personality['Con su tu'])
 if b4:
     with st.expander('Con ngua'):
         st.write(Personality['Con ngua'])
