@@ -22,3 +22,4 @@ if friends:
         st.write(selected_friend["info"])
 else:
     st.write("Chưa có bạn thân nào được lưu.")
+#testing
