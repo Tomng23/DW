@@ -1,52 +1,24 @@
 import streamlit as st
-st.set_page_config(page_title='Trac nghiem tinh canh', page_icon=':question:', layout='wide')
-st.title('Hay chon mot con vat ban yeu thich')
-col1, col2, col3, col4, col5 = st.columns(5)
 
-Personality = {'Con meo': 'Lua chon nay cho thay ban van chua san sang bat dau voi cong viec, ban khao khat duoc nghi ngoi.', 
-'Con cho':'Ban cam nhan duoc su ho tro nhiet tinh cua ban be va vi the nen san sang giai quyet moi van de xay ra.', 
-'Con su tu': 'Co the thay ban la mot nguoi voi ve ngoai noi bat. Ban thu hut moi nguoi bang ve ngoai hoang nhoang.',
-'Con ngua': 'Co ve nhu ban dang bi han che boi mot thu gi do lam cho ban khong cam thay duoc tu do.',
-'Thien nga': 'Hien tai ban dang co mot khoang thoi gian vui ve, ngot ngao, hay co gan tan huong.'}
+friends = []
 
-with col1:
-    b1 = st.button('Con meo')
-with col2:
-    b2 = st.button('Con cho')
-with col3:
-    b3 = st.button('Con su tu')
-with col4:
-    b4 = st.button('Con ngua')
-with col5:
-    b5 = st.button('Thien nga')
+st.title("Quản lý bạn thân")
 
-if b1:
-    with st.expander('Con meo'):
-        st.write(Personality['Con meo'])
-if b2:
-    with st.expander('Con cho'):
-        st.write(Personality['Con cho'])
-if b3:
-    with st.expander('Con su tu'):
-        st.write(Personality['Con su tu'])
-if b4:
-    with st.expander('Con ngua'):
-        st.write(Personality['Con ngua'])
-if b5:
-    with st.expander('Thien nga'):
-        st.write(Personality['Thien nga'])
+name = st.text_input("Nhập tên bạn thân:")
+info = st.text_area("Nhập thông tin về bạn thân:")
+if st.button("Lưu"):
+    if name and info:
+        friends.append({"name": name, "info": info})
+        st.success(f"Đã lưu thông tin của {name}.")
+    else:
+        st.error("Vui lòng nhập đầy đủ thông tin.")
 
-with st.sidebar:
-    st.title('Trac nghiem tinh cach')
-    if b1:
-        st.write('Con vat ma ban chon la con meo')
-    if b2:
-        st.write('Con vat ma ban chon la con cho')
-    if b3:
-        st.write('Con vat ma ban chon la con su tu')
-    if b4:
-        st.write('Con vat ma ban chon la con ngua')
-    if b5:
-        st.write('Con vat ma ban chon la con thien nga')
-
-
+if friends:
+    st.subheader("Chọn tên để xem thông tin:")
+    selected_name = st.selectbox("Bạn thân:", [friend["name"] for friend in friends])
+    if selected_name:
+        selected_friend = next(friend for friend in friends if friend["name"] == selected_name)
+        st.write(f"**Thông tin của {selected_name}:**")
+        st.write(selected_friend["info"])
+else:
+    st.write("Chưa có bạn thân nào được lưu.")
