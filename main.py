@@ -1,25 +1,21 @@
 import streamlit as st
-
-friends = []
-
-st.title("Quản lý bạn thân")
-
-name = st.text_input("Nhập tên bạn thân:")
-info = st.text_area("Nhập thông tin về bạn thân:")
-if st.button("Lưu"):
-    if name and info:
-        friends.append({"name": name, "info": info})
-        st.success(f"Đã lưu thông tin của {name}.")
-    else:
-        st.error("Vui lòng nhập đầy đủ thông tin.")
-
-if friends:
-    st.subheader("Chọn tên để xem thông tin:")
-    selected_name = st.selectbox("Bạn thân:", [friend["name"] for friend in friends])
-    if selected_name:
-        selected_friend = next(friend for friend in friends if friend["name"] == selected_name)
-        st.write(f"**Thông tin của {selected_name}:**")
-        st.write(selected_friend["info"])
-else:
-    st.write("Chưa có bạn thân nào được lưu.")
-#testing
+with st.form('Order đồ uống'):
+    drinks = ('Trà sữa trân châu đường đen', 'Trà sữa matcha', 'Trà sữa trái cây')
+    option_drink = st.selectbox('Bạn muốn loại đồ uống gì?', drinks)
+    sugars = ('Đường trắng', 'Đường đen', 'Không thêm đường')
+    option_sugar = st.selectbox('Bạn thích thêm loại đường nào cho đồ uống của bạn?', sugars)
+    jellys = ('Thạch râu câu', 'Thạch nha đam', 'Không thêm thạch')
+    option_jelly = st.selectbox('Bạn thích thêm loại thạch nào cho đố', jellys)
+    nums = st.slider('Số lượng bạn muốn đặt:', 0, 10, 0)
+    bill = {'Loại đồ uống:': option_drink, 'Loại đường:': option_sugar, 'Loại thạch:': option_jelly, 'Số lượng:': nums}
+    submitted = st.form_submit_button("Xác nhận")
+    if submitted:
+        st.write('Bạn đã chọn:')
+        for x,y in bill.items():
+            st.write(x,y)
+print_bill = st.checkbox('In hóa đơn')
+if print_bill:
+    ans = ''
+    for x in bill:
+        ans += str(x) + ' ' + str(bill[x]) + '\n'
+    st.download_button('In hóa đơn', ans)
